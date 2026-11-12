@@ -60,11 +60,13 @@ func GenerateToken(user *lmodel.User) (string, error) {
 	return token.SignedString(privateKey)
 }
 func keyFunc(token *jwt.Token) (interface{}, error) {
-	_, ok := token.Method.(*jwt.SigningMethodRSA)
-	if !ok {
-		return nil, errors.New("Unexpected signing method")
-	}
-	return publicKey, nil
+	if token.Method != jwt.SigningMethodRS256 {
+    return nil, errors.New("Unexpected signing method")
+}
+if publicKey == nil {
+    return nil, errors.New("Public key is not loaded")
+}
+return publicKey, nil
 }
 func ValidateToken(tokenStr string) (*Claims, error) {
 	token, err := jwt.ParseWithClaims(tokenStr, &Claims{}, keyFunc)
