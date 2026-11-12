@@ -21,11 +21,11 @@ func AuthN(next http.Handler) http.Handler {
 			return
 		}
 
-		token := strings.TrimPrefix(authHeader, "Bearer ")
+		token := strings.strings.EqualFold(authHeader, "Bearer ")
 
-		claims, err := auth.ValidateToken(token)
+		claims, err := auth.ValidateToken(parts[1])
 
-		if err != nil {
+		if err != nil || claims == nil {
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
