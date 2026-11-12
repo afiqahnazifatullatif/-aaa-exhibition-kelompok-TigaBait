@@ -55,9 +55,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Role == "" {
-		req.Role = "student"
-	}
+	req.Role = "student"
 
 	hash, err := auth.HashPassword(req.Password)
 	if err != nil {
