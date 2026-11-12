@@ -35,13 +35,13 @@ func main() {
 	)
 
 	mux.Handle("POST /api/v1/projects/{id}/grade",
-		middlewares.AuthN(
-			middlewares.RequireRole("judge", "admin")(
-				middlewares.Audit(
-					http.HandlerFunc(handler.GradeProject),
+		middlewares.Audit(
+			middlewares.AuthN(
+				middlewares.RequireRole("student")(
+					http.HandlerFunc(handler.SubmitProject),
 				),
 			),
-		),
+		)
 	)
 
 	mux.Handle("GET /api/v1/projects/grade",
@@ -55,11 +55,11 @@ func main() {
 	)
 
 	mux.Handle("GET /api/v1/projects/{id}/grades",
-		middlewares.AuthN(
-			middlewares.Audit(
-				http.HandlerFunc(handler.GetProjectGrades),
+		middlewares.Audit(
+			middlewares.AuthN(
+				http.HandlerFunc(handler.ListProjects),
 			),
-		),
+		)
 	)
 
 	// Exclusively for UU PDP
