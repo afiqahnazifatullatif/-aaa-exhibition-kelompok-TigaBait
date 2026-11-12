@@ -1,5 +1,5 @@
-   keys/
-   *.pem
-   .env
-   pgdata/
-   bin/
+keys/
+*.pem
+.env
+pgdata/
+bin/
